@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bored Puppets Yacht Club</title>
+
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+
+<body>
+
+    <div id="pageloader" class="pageloader"></div>
+    <div id="infraloader" class="infraloader is-active"></div>    
+    <section class="hero is-fullheight is-default is-bold">
+    
+        <nav x-data="initNavbar()" class="navbar is-fresh is-transparent no-shadow" role="navigation"
+            aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="https://boredpuppetsyachtclub.com">
+                        <img src="/img/logo/logolungo2.png" alt="BPYC" width="230" height="20">
+                    </a>
+        
+                    <a @click="openSidebar()" class="navbar-item is-hidden-desktop is-hidden-tablet">
+                        <div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: visible;" :class="{
+                                'open': $store.app.isSiderbarOpen,
+                                '': !$store.app.isSiderbarOpen
+                            }">
+                            <svg width="1000px" height="1000px">
+                                <path class="path1"
+                                    d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+                                <path class="path2" d="M 300 500 L 700 500"></path>
+                                <path class="path3"
+                                    d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+                            </svg>
+                            <button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+                        </div>
+                    </a>
+        
+                    <div class="navbar-burger" @click="openMobileMenu()">
+                        <span class="menu-toggle">
+                            <span class="icon-box-toggle" :class="{
+                                    'active': mobileOpen,
+                                    '': !mobileOpen
+                                }">
+                                <span class="rotate">
+                                    <i class="icon-line-top"></i>
+                                    <i class="icon-line-center"></i>
+                                    <i class="icon-line-bottom"></i>
+                                </span>
+                            </span>
+                    </div>
+                </div>
+        
+                <div id="navbar-menu" class="navbar-menu is-static" :class="{
+                        'is-active': mobileOpen,
+                        '': !mobileOpen
+                    }">
+        
+                    <div class="navbar-start">
+                        <a @click="openSidebar()" class="navbar-item is-hidden-mobile">
+                            <div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: visible;" :class="{
+                                    'open': $store.app.isSiderbarOpen,
+                                    '': !$store.app.isSiderbarOpen
+                                }">
+                                <svg width="1000px" height="1000px">
+                                    <path class="path1"
+                                        d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800">
+                                    </path>
+                                    <path class="path2" d="M 300 500 L 700 500"></path>
+                                    <path class="path3"
+                                        d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200">
+                                    </path>
+                                </svg>
+                                <button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+                            </div>
+                        </a>
+                    </div>
+        
+                    <div class="navbar-end">
+                        <a href="https://moonbeam.moonscan.io/token/0xd364fB95989F5A47dDb9665149DD750782d37c7f" target="_blank" class="navbar-item is-secondary">
+                            Contract
+                        </a>
+                        <a href="https://linktr.ee/boredpuppetsyachtclub" target="_blank" class="navbar-item is-secondary">
+                            Social
+                        </a>
+                        <a href="https://tapk.it/boredpuppetsyachtclub" target="_blank" class="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
+                            Marketplaces
+                        </a>
+                        <a href="https://roadmap.boredpuppetsyachtclub.com" target="_blank" class="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
+                            RoadMap
+                        </a>
+                        <a href="https://linktr.ee/mintyourbpyc" target="_blank" class="navbar-item">
+                            <span class="button signup-button rounded secondary-btn raised">
+                                Minting Pages
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <nav x-data="initNavbar()"  x-on:scroll.window="scroll()" id="navbar-clone" class="navbar is-fresh is-transparent" role="navigation" aria-label="main navigation" :class="{
+                'is-active': scrolled,
+                '': !scrolled
+            }">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="https://boredpuppetsyachtclub.com">
+                        <img src="/img/logo/logolungo2.png" alt="BPYC" width="230" height="20">
+                    </a>
+        
+                    <a @click="openSidebar()" class="navbar-item is-hidden-desktop is-hidden-tablet">
+                        <div id="menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: visible;" :class="{
+                                'open': $store.app.isSiderbarOpen,
+                                '': !$store.app.isSiderbarOpen
+                            }">
+                            <svg width="1000px" height="1000px">
+                                <path class="path1" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+                                <path class="path2" d="M 300 500 L 700 500"></path>
+                                <path class="path3" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+                            </svg>
+                            <button id="menu-icon-trigger" class="menu-icon-trigger"></button>
+                        </div>
+                    </a>
+        
+                    <div class="navbar-burger" @click="openMobileMenu()">
+                        <span class="menu-toggle">
+                            <span class="icon-box-toggle" :class="{
+                                    'active': mobileOpen,
+                                    '': !mobileOpen
+                                }">
+                                <span class="rotate">
+                                    <i class="icon-line-top"></i>
+                                    <i class="icon-line-center"></i>
+                                    <i class="icon-line-bottom"></i>
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+        
+                <div id="cloned-navbar-menu" class="navbar-menu is-fixed" :class="{
+                        'is-active': mobileOpen,
+                        '': !mobileOpen
+                    }">
+        
+                    <div class="navbar-start">
+                        <a @click="openSidebar()" class="navbar-item is-hidden-mobile">
+                            <div id="cloned-menu-icon-wrapper" class="menu-icon-wrapper" style="visibility: visible;" :class="{
+                                    'open': $store.app.isSiderbarOpen,
+                                    '': !$store.app.isSiderbarOpen
+                                }">
+                                <svg width="1000px" height="1000px">
+                                    <path class="path1" d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"></path>
+                                    <path class="path2" d="M 300 500 L 700 500"></path>
+                                    <path class="path3" d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"></path>
+                                </svg>
+                                <button id="cloned-menu-icon-trigger" class="menu-icon-trigger"></button>
+                            </div>
+                        </a>
+                    </div>
+        
+                    <div class="navbar-end">
+                        <a href="https://moonbeam.moonscan.io/token/0xd364fB95989F5A47dDb9665149DD750782d37c7f" target="_blank" class="navbar-item is-secondary">
+                            Contract
+                        </a>
+                        <a href="https://linktr.ee/boredpuppetsyachtclub" target="_blank" class="navbar-item is-secondary">
+                            Social
+                        </a>
+                        <a href="https://tapk.it/boredpuppetsyachtclub" target="_blank" class="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
+                            Marketplaces
+                        </a>
+                        <a href="https://roadmap.boredpuppetsyachtclub.com" target="_blank" class="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
+                            RoadMap
+                        </a>
+                        <a href="https://linktr.ee/mintyourbpyc" target="_blank" class="navbar-item">
+                            <span class="button signup-button rounded secondary-btn raised">
+                                Minting Pages
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column is-5 is-offset-1 landing-caption">
+                        <h1 class="title is-1 is-bold is-spaced">
+                            The Bored Puppets Yacht Club
+                        </h1>
+                        <h2 class="subtitle is-5 is-muted">A limited NFT collection where the token itself doubles as your membership to a swamp club for puppets. The club is open! Ape in with us.</h2>
+                        <div class="button-wrap">
+                            <a href="https://www.glmr.boredpuppetsyachtclub.com" target="_blank" class="button cta is-rounded primary-btn raised">
+                                Mint on GLMR
+                            </a>
+                            <a href="https://www.movr.boredpuppetsyachtclub.com" target="_blank" class="button cta is-rounded">
+                                Mint on MOVR
+                            </a>
+                            <a href="https://www.evmos.boredpuppetsyachtclub.com" target="_blank" class="button cta is-rounded primary-btn raised">
+                                Mint on EVMOS
+                            </a>
+                        </div>
+                    </div>
+                    <div class="column is-5">
+                        <figure class="image is-4by3">
+                            <img src="/img/illustrations/example.gif" alt="">
+                        </figure>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="container">
+            <div class="title-wrapper has-text-centered">
+                <h2 class="title is-2">BPYC Supported Chains </h2>
+                <h3 class="subtitle is-5 is-muted">BPYC is a collection of 9,999 Bored Puppets NFTs—unique digital collectibles living across all EVM blockchains.</h3>
+                <div class="divider is-centered"></div>
+            </div>
+             
+    
+            <div class="content-wrapper">
+                <div class="columns">
+                    <div class="column is-one-third">
+                        <div class="feature-card is-bordered has-text-centered is-feature-reveal">
+                            <div class="card-title">
+                                <h4>Moonbeam</h4>
+                            </div>
+                            <div class="card-icon">
+                                <img src="/img/icons/web.svg">
+                            </div>
+                            <div class="card-text">
+                                <p>You can Mint your Puppet for only 1 GLMR</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="https://www.boredpuppetsyachtclub.xyz" target="_blank" class="button btn-align-md primary-btn raised">Mint on GLMR</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="feature-card is-bordered has-text-centered is-feature-reveal">
+                            <div class="card-title">
+                                <h4>Moonriver</h4>
+                            </div>
+                            <div class="card-icon">
+                                <img src="/img/icons/web.svg">
+                            </div>
+                            <div class="card-text">
+                                <p>You can Mint your Puppet for only 0,1 MOVR</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="https://www.movr.boredpuppetsyachtclub.com" class="button btn-align-md primary-btn raised">Mint on MOVR</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="feature-card is-bordered has-text-centered is-feature-reveal">
+                            <div class="card-title">
+                                <h4>Evmos</h4>
+                            </div>
+                            <div class="card-icon">
+                                <img src="/img/icons/web.svg">
+                            </div>
+                            <div class="card-text">
+                                <p>You can Mint your Puppet for only 10 EVMOS</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="https://evmos.boredpuppetsyachtclub.com" class="button btn-align-md primary-btn raised">Mint on EVMOS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section is-medium">
+        <div class="container">
+            <div class="title-wrapper has-text-centered">
+                <h2 class="title is-2">Awesome Features</h2>
+                <h3 class="subtitle is-5 is-muted"></h3>
+                <div class="divider is-centered"></div>
+            </div>
+    
+            <div class="columns is-vcentered side-feature mt-60">
+                <div class="column is-4 is-offset-2">
+                    <h3 class="title is-3 mb-10 is-title-reveal">Rarity</h3>
+                    <p class="subtitle is-5 is-muted">Each Bored Puppet is unique and programmatically generated, including expression, headwear, clothing, and more. All puppets are dope, but some are rarer than others.</p>
+                </div>
+                <div class="column is-5">
+                    <img src="/img/illustrations/features/Toy_Bear.png" alt="">
+                </div>
+            </div>
+    
+            <div class="columns is-vcentered side-feature mt-60">
+                <div class="column is-5 is-offset-1">
+                    <img src="/img/illustrations/features/cyberspace-vector.png" alt="">
+                </div>
+                <div class="column is-4 is-offset-1">
+                    <h3 class="title is-3 mb-10 is-title-reveal">Decentralization</h3>
+                    <p class="subtitle is-5 is-muted">The Puppets are stored as ERC-721 tokens on differents EVM blockchains and hosted on IPFS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section is-medium">
+        <div class="container">
+    
+            <div class="columns is-vcentered app-side">
+                <div class="column is-5 is-offset-1">
+                    <h3 class="title is-3 is-spaced is-title-reveal">Multichain Rarity</h3>
+                    <p class="subtitle is-5 is-muted">since all the puppets are different from each other, those that will be deployed on one chain will not be available in another.</p>
+                </div>
+                <div class="column is-10">
+                    <div class="has-text-centered">
+                        <img src="/img/illustrations/features/diamond-round.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section class="section is-medium  has-background-image" data-background="/img/illustrations/523915.jpg" data-color="#4FC1EA" data-color-opacity="">
+        <div class="overlay"></div>
+        <div class="container">
+    
+            <div class="title-wrapper has-text-centered">
+                <h2 class="title is-2 light-text is-spaced">Our Community is growing fast</h2>
+                <h3 class="subtitle is-5 light-text"></h3>
+            </div>
+    
+            <div class="content-wrapper">
+                <div class="columns is-vcentered">
+                    <div class="column is-4">
+                        <figure class="testimonial">
+                            <blockquote>
+                                Every child is an artist. The problem is how to remain an artist once we grow up.
+                            </blockquote>
+                            <div class="author">
+                                <img src="/img/illustrations/faces/1.png" alt=""/>
+                                <h5>Ellis</h5><span>Marketing Manager</span>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="column is-4">
+                        <figure class="testimonial">
+                            <blockquote>
+                             It's how you deal with failure that determines how you achieve success.
+                            </blockquote>
+                            <div class="author">
+                                <img src="/img/illustrations/faces/2.png" alt=""/>
+                                <h5>Daniele</h5><span>Financial Analyst</span>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="column is-4">
+                        <figure class="testimonial">
+                            <blockquote>
+                                Art enables us to find ourselves and lose ourselves at the same time.
+                            </blockquote>
+                            <div class="author">
+                                <img src="/img/illustrations/faces/3.png" alt=""/>
+                                <h5>Michelangelo</h5><span>Designer</span>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <footer class="footer footer-dark">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                </div>
+                <div class="column">
+                    <div class="footer-column">
+                        <div class="footer-header">
+                            <h3>Minting Pages</h3>
+                        </div>
+                        <ul class="link-list">
+                            <li><a href="https://boredpuppetsyachtclub.xyz" target="_blank">Mint on Moonbeam</a></li>
+                            <li><a href="https://movr.boredpuppetsyachtclub.com" target="_blank">Mint on Moonriver</a></li>
+                            <li><a href="https://evmos.boredpuppetsyachtclub.com" target="_blank">Mint on Evmos</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="footer-column">
+                        <div class="footer-header">
+                            <h3>Marketplaces</h3>
+                        </div>
+                        <ul class="link-list">
+                            <li><a href="https://tofunft.com/collection/boredpuppetsyachtclub/items" target="_blank">Moonbeam (Tofunft)</a></li>
+                            <li><a href="https://tofunft.com/collection/boredpuppetsyachtclub/items" target="_blank">Moonriver (Tofunft)</a></li>
+                            <li><a href="https://moonbeans.io/#/collections/boredpuppetsyachtclub" target="_blank">Moonriver (Moonbeans)</a></li>
+                            <li><a href="https://nftrade.com/assets/moonriver/0xb8017e9660960c58b63d2deda983de4a7912e379" target="_blank">Moonriver (NFTtrade)</a></li>
+                            <li><a href="https://nftrade.com/assets/moonbeam/0xd364fb95989f5a47ddb9665149dd750782d37c7f" target="_blank">Moonbeam (NFTtrade)</a></li>
+                            <li><a href="https://treasureland.market/collection/0xd364fb95989f5a47ddb9665149dd750782d37c7f?chain_id=1284" target="_blank">Moonbeam (TreasureLand)</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="footer-column">
+                        <div class="footer-header">
+                            <h3>Contracts</h3>
+                        </div>
+                        <ul class="link-list">
+                            <li><a href="https://moonbeam.moonscan.io/token/0xd364fB95989F5A47dDb9665149DD750782d37c7f" target="_blank">Moonbeam Contract</a></li>
+                            <li><a href="https://moonriver.moonscan.io/token/0xb8017E9660960C58b63d2DEdA983De4A7912E379" target="_blank">Moonriver Contract</a></li>
+                            <li><a href="https://evm.evmos.org/token/0xCaa087e6531fb9AAae423E439DA522cCD8D57B97/token-transfers" target="_blank">Evmos Contract</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="footer-column">
+                        <div class="footer-header">
+                            <h3>Follow Us</h3>
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+                            
+    
+                            <a href="https://linktr.ee/boredpuppetsyachtclub" target="_blank">
+                                <img src="/img/illustrations/features/Toy_Bear.png" alt="BPYC" width="200" height="100">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Back To Top Button -->
+    <div x-data="initBackToTop()" x-on:scroll.window="scroll($event)" @click="goTop($event)" id="backtotop"><a href="javascript:" :class="{
+        'visible': scrolled,
+        '': !scrolled
+    }"></a></div>    <div x-data="initSidebar()" class="sidebar" :class="{
+            'is-active': $store.app.isSiderbarOpen,
+            '': !$store.app.isSiderbarOpen
+        }">
+        <div class="sidebar-header">
+            <img src="/img/logo/logolungo.png">
+            <a @click="closeSidebar()" class="sidebar-close" href="javascript:void(0);"><i data-feather="x"></i></a>
+        </div>
+        <div class="inner">
+            <ul class="sidebar-menu">
+                <li><span class="nav-section-title"></span></li>
+                <li @click="openSidebarMenu($event)" data-menu="sidebar-menu-1" class="have-children" :class="{
+                        'active': openedMenu === 'sidebar-menu-1',
+                        '': openedMenu != 'sidebar-menu-1'
+                    }">
+                <a href="#">
+                    <span class="material-icons">apps</span>
+                    <span>Minting pages</span>
+                </a>
+                    <ul x-show.transition="openedMenu === 'sidebar-menu-1'">
+                        <li><a href="https://glmr.boredpuppetsyachtclub.com" target="_blank">Mint on Moonbeam</a></li>
+                        <li><a href="https://movr.boredpuppetsyachtclub.com" target="_blank">Mint on Moonriver</a></li>
+                        <li><a href="https://evmos.boredpuppetsyachtclub.com" target="_blank">Mint on Evmos</a></li>
+                    </ul>
+                </li>
+                <li @click="openSidebarMenu($event)" data-menu="sidebar-menu-2" class="have-children" :class="{
+                        'active': openedMenu === 'sidebar-menu-2',
+                        '': openedMenu != 'sidebar-menu-2'
+                    }">
+                    <a href="#">
+                        <span class="material-icons">duo</span>
+                        <span>Marketplaces</span>
+                    </a>
+                    <ul x-show.transition="openedMenu === 'sidebar-menu-2'">
+                        <li><a href="https://tofunft.com/collection/boredpuppetsyachtclub/items" target="_blank">Moonbeam (Tofunft)</a></li>
+                        <li><a href="https://tofunft.com/collection/boredpuppetsyachtclub/items" target="_blank">Moonriver (Tofunft)</a></li>
+                        <li><a href="https://moonbeans.io/#/collections/boredpuppetsyachtclub" target="_blank">Moonriver (Moonbeans)</a></li>
+                        <li><a href="https://nftrade.com/assets/moonriver/0xb8017e9660960c58b63d2deda983de4a7912e379" target="_blank">Moonriver (NFTtrade)</a></li>
+                        <li><a href="https://nftrade.com/assets/moonbeam/0xd364fb95989f5a47ddb9665149dd750782d37c7f" target="_blank">Moonbeam (NFTtrade)</a></li>
+                        <li><a href="https://treasureland.market/collection/0xd364fb95989f5a47ddb9665149dd750782d37c7f?chain_id=1284" target="_blank">Moonbeam (TreasureLand)</a></li>
+                    </ul>
+                </li>
+                <li @click="openSidebarMenu($event)" data-menu="sidebar-menu-3" class="have-children" :class="{
+                        'active': openedMenu === 'sidebar-menu-3',
+                        '': openedMenu != 'sidebar-menu-3'
+                    }">
+                    <a href="#">
+                        <span class="material-icons">insert_photo</span>
+                        <span>Social </span>
+                    </a>
+                    <ul x-show.transition="openedMenu === 'sidebar-menu-3'">
+                        <li><a href="https://discord.gg/MCrWwzmwvM" target="_blank">Discord</a></li>
+                        <li><a href="https://instagram.com/boredpuppetsyachtclub" target="_blank">Instagram</a></li>
+                        <li><a href="https://www.twitter.com/boredpuppetsnft" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.facebook.com/boredpuppetsyachtclub" target="_blank">Facebook</a></li>
+                    </ul>
+                </li>
+                <li @click="openSidebarMenu($event)" data-menu="sidebar-menu-4" class="have-children" :class="{
+                        'active': openedMenu === 'sidebar-menu-4',
+                        '': openedMenu != 'sidebar-menu-4'
+                    }">
+                    <a href="#">
+                        <span class="material-icons">policy</span>
+                        <span>Contracts</span>
+                    </a>
+                    <ul x-show.transition="openedMenu === 'sidebar-menu-4'">
+                        <li><a href="https://moonbeam.moonscan.io/token/0xd364fB95989F5A47dDb9665149DD750782d37c7f" target="_blank">Moonbeam Contract</a></li>
+                        <li><a href="https://moonriver.moonscan.io/token/0xb8017E9660960C58b63d2DEdA983De4A7912E379" target="_blank">Moonriver Contract</a></li>
+                        <li><a href="https://evm.evmos.org/token/0xCaa087e6531fb9AAae423E439DA522cCD8D57B97/token-transfers" target="_blank">Evmos Contract</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="./js/bundle.js"></script>
+
+</body>
+
+</html>
